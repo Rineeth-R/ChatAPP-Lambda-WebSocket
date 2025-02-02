@@ -1,0 +1,21 @@
+// message.js
+exports.handler = async (event) => {
+    const connectionId = event.requestContext.connectionId;
+    const body = JSON.parse(event.body);
+
+    // Here you can send the message to all connected clients or specific clients
+    const message = body.message;
+
+    // Logic to broadcast message to all connections
+    // This is simplified, for full broadcasting you may want to use API Gateway management API or a database like DynamoDB
+
+    console.log(`Message from ${connectionId}: ${message}`);
+
+    // Sending the message back to the sender
+    return {
+        statusCode: 200,
+        body: JSON.stringify({
+            message: `Message received: ${message}`,
+        }),
+    };
+};

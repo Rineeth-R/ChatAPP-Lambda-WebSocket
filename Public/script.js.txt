@@ -1,0 +1,29 @@
+// script.js
+const websocketUrl = 'wss://<API-Gateway-WebSocket-URL>';
+
+let socket = new WebSocket(websocketUrl);
+
+socket.onopen = function () {
+    console.log('Connected to WebSocket');
+};
+
+socket.onmessage = function (event) {
+    const messagesDiv = document.getElementById('messages');
+    const message = document.createElement('div');
+    message.textContent = event.data;
+    messagesDiv.appendChild(message);
+};
+
+socket.onclose = function () {
+    console.log('Disconnected from WebSocket');
+};
+
+document.getElementById('sendMessageBtn').addEventListener('click', () => {
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value;
+
+    if (message) {
+        socket.send(JSON.stringify({ message }));
+        messageInput.value = '';  // Clear input field
+    }
+});
